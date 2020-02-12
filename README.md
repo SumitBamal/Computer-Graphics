@@ -4,7 +4,7 @@ Various Computer Graphics Assignment
 
 # All Files Description
 
-# Main File :
+Main File :
 drawLine.py <br />
    Containing ViewPort Class <br />
 Other: <br />
