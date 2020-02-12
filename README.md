@@ -5,8 +5,8 @@ Various Computer Graphics Assignment
 # All Files Description
 
 # Main File :
-\t drawLine.py <br />
-Containing ViewPort Class <br />
+drawLine.py <br />
+   Containing ViewPort Class <br />
 Other: <br />
 8-floodfill.py  ->8 way Flood filling a polygon <br />
 drawCircle.py   ->Draw a circle <br />
