@@ -1,2 +1,2 @@
 # Computer-Graphics
-Various Cumputer Graphics Assignment
+Various Computer Graphics Assignment
