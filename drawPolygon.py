@@ -11,11 +11,12 @@ from graphics import *
 -100 100
 0 50
 '''
-def drawPoly(vert,win,color='white'):
+def drawPoly(vertices,win,color='white'):
+	vert = vertices.copy()
 	vert+=[vert[0]]
 	for i in range(len(vert)-1):
 		x1,y1,x2,y2 = *vert[i],*vert[i+1]
-		print(win,color,x1,y1,x2,y2)
+		#print(win,color,x1,y1,x2,y2)
 		drawLine(win,color,x1,y1,x2,y2)
 
 def main():
