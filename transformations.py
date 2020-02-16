@@ -16,7 +16,7 @@ def translation(vert,x,y,win,f=True):
     ###Translation matrix
     trans = [[1,0,0],[0,1,0],[-x,-y,1]]
 
-    result = [[int(sum(a*b for a,b in zip(A_row,B_col))) for B_col in trans ] for A_row in vert]
+    result = [[int(sum(a*b for a,b in zip(A_row,B_col))) for B_col in zip(*trans) ] for A_row in vert]
     result = [i[:-1] for i in result]
 
     #drawPoly(result,win,'blue')
