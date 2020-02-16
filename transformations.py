@@ -45,7 +45,7 @@ def only_rotation(vert,x,y,angle,win):
 
 def scale(vert,x,y,sx,sy,win):
     vert = translation(vert,x,y,win,False)
-    only_scale(vert,x,y,sx,sy,win)
+    result = only_scale(vert,x,y,sx,sy,win)
     result = translation(result,-x,-y,win,False)
     return result
 
