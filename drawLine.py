@@ -17,14 +17,14 @@ class ViewPort:
 		t=Text(Point(self.xVmax,self.yVmax),'('+str(self.xVmax)+str(self.yVmax)+')')
 		t.setSize(8)
 		t.draw(win)
-		for i in range(self.xVmin,self.xVmax):
-			pt= Point(i,0)
-			pt.draw(win)
-			pt.setFill('blue')
-		for i in range(self.yVmin,self.yVmax):
-			pt= Point(0,i)
-			pt.draw(win)	
-			pt.setFill('blue')	
+		L1 = Line(Point(self.xVmin,0),Point(self.xVmax,0))
+		L2 = Line(Point(0,self.yVmin),Point(0,self.yVmax))
+		L1.setFill('blue')
+		L2.setFill('blue')
+		L1.setArrow("last")
+		L2.setArrow("last")
+		L1.draw(win)
+		L2.draw(win)
 		return win
 		
 	
@@ -37,6 +37,15 @@ class Window:
 					x_view = (x_win-self.xwmin)*(ViewPort.xVmax - ViewPort.xVmin)/(self.xwmax-self.xwmin)  + ViewPort.xVmin
 					y_view = (y_win-self.ywmin)*(ViewPort.yVmax - ViewPort.yVmin)/(self.ywmax-self.ywmin)  + ViewPort.yVmin
 					return int(x_view),int(y_view)
+
+def drawAxis(win,new_view):
+	L1 = Line(Point(new_view.xVmin,0),Point(new_view.xVmax,0))
+	L2 = Line(Point(0,new_view.yVmin),Point(0,new_view.yVmax))
+	L1.setFill('blue')
+	L2.setFill('blue')
+	L1.draw(win)
+	L2.draw(win)
+	return win
 
 
 def bresenham(x0, y0, x1, y1):

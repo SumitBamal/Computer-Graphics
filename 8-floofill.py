@@ -67,7 +67,8 @@ def main():
 		x,y= i
 		win.plot(*i)
 		pixel_dict[(x,y)]=1
-	stack=[(0,0)]	
+	point = win.getMouse()
+	stack=[(int(point.getX()),int(point.getY()))]		
 	
 	#Comment this line for just polygon
 	boundaryFill(pixel_dict,stack,filled,win)	

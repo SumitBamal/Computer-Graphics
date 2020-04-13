@@ -15,7 +15,7 @@ from graphics import *
 
 
 '''
-def scanLine(edge_table,y_min,y_max,win):
+def scanLine(edge_table,y_min,y_max,win,color="rand"):
 	active_edge = []
 	for curr_y in range(y_min,y_max+1):
 		i=0
@@ -36,10 +36,37 @@ def scanLine(edge_table,y_min,y_max,win):
 		#Fill all
 		for cur in range(0,len(active_edge)-1,2):
 			for x in range(active_edge[cur][0],active_edge[cur+1][0]+1):
-				r=random.randint(0,255)
-				g=random.randint(0,255)
-				b=random.randint(0,255)
-				win.plot(x,curr_y,color=color_rgb(r,g,b))
+				if color=="rand":
+					r=random.randint(0,255)
+					g=random.randint(0,255)
+					b=random.randint(0,255)
+					win.plot(x,curr_y,color=color_rgb(r,g,b))
+				else:
+					win.plot(x,curr_y,color)
+
+def scanLineUtil(vert,win,color):
+	vert+=[vert[0]]
+	edge_table =dd(list)
+	for i in range(len(vert)-1):
+		#Edge table
+		x,y,x1,y1 =*vert[i],*vert[i+1]
+		if y>y1:
+			x,y,x1,y1 =x1,y1,x,y 
+		if y==y1:
+			continue
+		if x1==x:
+			slope_inv = 0
+		else:	
+			slope_inv = (x1-x)/(y1-y)
+				 
+		edge_table[y].append([x,x,y1,slope_inv])
+	#edge_table.sort()
+
+	y_max = max(v[1] for v in vert)
+	y_min = min(v[1] for v in vert)
+	
+	scanLine(edge_table,y_min,y_max,win,color)
+
 def main():
 	vert = []
 	

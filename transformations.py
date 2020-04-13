@@ -1,4 +1,4 @@
-from drawLine import ViewPort,drawLine
+from drawLine import ViewPort,drawLine,drawAxis
 from drawPolygon import drawPoly
 import math,random
 from graphics import *
@@ -8,9 +8,16 @@ from graphics import *
 125 50
 25 100
 -75 50
+
+0 0
+100 0
+150 20
+30 90
+-100 -40
+
 '''
-def translation(vert,x,y,win,f=True):
-    if f:input("translate by"+str(x)+str(y))
+def translation(vert,x,y,win):
+    #if f:input("translate by"+str(x)+str(y))
     vert = [i+[1] for i in vert]
     
     ###Translation matrix
@@ -23,13 +30,13 @@ def translation(vert,x,y,win,f=True):
 
     return result
 def rotation(vert,x,y,angle,win):
-    vert = translation(vert,x,y,win,False)
+    vert = translation(vert,x,y,win)
     vert =only_rotation(vert,x,y,angle,win)
-    result = translation(vert,-x,-y,win,False)
+    result = translation(vert,-x,-y,win)
     return result
 
 def only_rotation(vert,x,y,angle,win):
-    input("Rotate at"+str(x)+str(y)+" by"+str(angle)+"?")
+    #input("Rotate at"+str(x)+str(y)+" by"+str(angle)+"?")
         
     angle = (math.pi*angle/180)
     vert = [i+[1] for i in vert]
@@ -44,13 +51,13 @@ def only_rotation(vert,x,y,angle,win):
     return result
 
 def scale(vert,x,y,sx,sy,win):
-    vert = translation(vert,x,y,win,False)
+    vert = translation(vert,x,y,win)
     result = only_scale(vert,x,y,sx,sy,win)
-    result = translation(result,-x,-y,win,False)
+    result = translation(result,-x,-y,win)
     return result
 
 def only_scale(vert,x,y,sx,sy,win):
-    input("Scale at "+str(x)+str(y)+" by"+str(sx)+str(sy)+"?")
+    #input("Scale at "+str(x)+str(y)+" by"+str(sx)+str(sy)+"?")
     
     vert = [i+[1] for i in vert]
     
@@ -63,10 +70,8 @@ def only_scale(vert,x,y,sx,sy,win):
     #drawPoly(result,win,'red2')
     
     return result
-
 def reflection(vert,x,y,angle,win):
-    input("Reflect by line passing through"+str(x)+str(y)+" at angle "+str(angle)+"?")
-    vert = translation(vert,x,y,win,False)
+    vert = translation(vert,x,y,win)
     vert = only_rotation(vert,x,y,angle,win)
     
     vert = [i+[1] for i in vert]
@@ -79,7 +84,7 @@ def reflection(vert,x,y,angle,win):
 
     #drawPoly(result,win,'green2')
     result = only_rotation(result,x,y,-angle,win)
-    result = translation(result,-x,-y,win,False)
+    result = translation(result,-x,-y,win)
     return result
 
 def shear_x(vert,shx,win ):
@@ -116,21 +121,82 @@ def main():
         new_view =ViewPort(-400,-400,400,400)	
     print('ViewPort :',new_view)
     win = new_view.init_view()
-    functions  = [rotation,translation,scale,reflection,shear_x,shear_y]
     drawPoly(vert,win)
+    
     while 1:
-        w=list(map(int,input('''1.Rotate<x,y,angle>
-2.Translate<x,y>
-3.Scale<x,y,sx,sy> 
-4.Reflect<x,y,angle>
-5.Shear_x<shx>
-6.Shear_y<shy>
->>''').split()))
-        vert = functions[w[0]-1](vert , *w[1:] , win)
-        r=random.randint(0,255)
-        g=random.randint(0,255)
-        b=random.randint(0,255)
-        drawPoly(vert,win,color_rgb(r,g,b))
-        input()
+        k=win.getKey()
+        #print(k,vert)
+        if k=="Left":
+            drawPoly(vert,win,color_rgb(44,44,44))
+            drawAxis(win,new_view)
+            vert = translation(vert,10,0,win) 
+            drawPoly(vert,win,"red")
+        elif k=="Right":
+            drawPoly(vert,win,color_rgb(44,44,44))
+            drawAxis(win,new_view)
+            vert = translation(vert,-10,0,win) 
+            drawPoly(vert,win,"red")
+        elif k=="Up":
+            drawPoly(vert,win,color_rgb(44,44,44))
+            drawAxis(win,new_view)
+            vert = translation(vert,0,-10,win) 
+            drawPoly(vert,win,"red")
+        elif k=="Down":
+            drawPoly(vert,win,color_rgb(44,44,44))
+            drawAxis(win,new_view)
+            vert = translation(vert,0,10,win) 
+            drawPoly(vert,win,"red")
+        elif k=="s":
+            drawPoly(vert,win,color_rgb(44,44,44))
+            drawAxis(win,new_view)
+            vert = only_scale(vert,0,0,2,2,win) 
+            drawPoly(vert,win,"red")
+        elif k=="S":
+            drawPoly(vert,win,color_rgb(44,44,44))
+            drawAxis(win,new_view)
+            vert = only_scale(vert,0,0,0.5,0.5,win) 
+            drawPoly(vert,win,"red")
+        elif k=="r":
+            drawPoly(vert,win,color_rgb(44,44,44))
+            drawAxis(win,new_view)
+            vert = only_rotation(vert,0,0,15,win) 
+            drawPoly(vert,win,"red")
+        elif k=="R":
+            drawPoly(vert,win,color_rgb(44,44,44))
+            drawAxis(win,new_view)
+            vert = only_rotation(vert,0,0,-15,win) 
+            drawPoly(vert,win,"red")
+        elif k=="f":
+            drawPoly(vert,win,color_rgb(44,44,44))
+            drawAxis(win,new_view)
+            vert = reflection(vert,0,0,45,win) 
+            drawPoly(vert,win,"red")
+        elif k=="F":
+            drawPoly(vert,win,color_rgb(44,44,44))
+            drawAxis(win,new_view)
+            vert = reflection(vert,0,0,-45,win) 
+            drawPoly(vert,win,"red")        
+        elif k=="x":
+            drawPoly(vert,win,color_rgb(44,44,44))
+            drawAxis(win,new_view)
+            vert = shear_x(vert,1,win) 
+            drawPoly(vert,win,"red")        
+        elif k=="X":
+            drawPoly(vert,win,color_rgb(44,44,44))
+            drawAxis(win,new_view)
+            vert = shear_x(vert,-1,win) 
+            drawPoly(vert,win,"red")        
+        elif k=="y":
+            drawPoly(vert,win,color_rgb(44,44,44))
+            drawAxis(win,new_view)
+            vert = shear_y(vert,1,win) 
+            drawPoly(vert,win,"red")        
+        elif k=="Y":
+            drawPoly(vert,win,color_rgb(44,44,44))
+            drawAxis(win,new_view)
+            vert = shear_y(vert,-1,win) 
+            drawPoly(vert,win,"red")
+        #else:
+        #    break
 if __name__ == "__main__":
     main()
